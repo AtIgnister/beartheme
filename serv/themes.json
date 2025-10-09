@@ -1,12 +1,7 @@
 [
     {
         "name": "test-theme",
-        "style_url": "http://localhost:8000/example.css",
-        "thumbnail": "https://bear-images.sfo2.cdn.digitaloceanspaces.com/kami/icon.webp"
-    },
-    {
-        "name": "other-test-theme",
-        "style_url": "http://localhost:8000/example.css",
-        "thumbnail": "https://bear-images.sfo2.cdn.digitaloceanspaces.com/kami/icon.webp"
+        "style_url": "https://raw.githubusercontent.com/AtIgnister/beartheme/refs/heads/main/serv/example.css",
+        "thumbnail": "https://raw.githubusercontent.com/AtIgnister/beartheme/refs/heads/main/serv/thumb.png"
     }
 ]
