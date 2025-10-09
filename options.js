@@ -1,12 +1,13 @@
 // Load existing URL
-chrome.storage.local.get("jsonUrl", ({ jsonUrl }) => {
-  document.getElementById("jsonUrl").value = jsonUrl || "";
+chrome.storage.local.get("jsonUrls", ({ jsonUrls }) => {
+  document.getElementById("jsonUrls").value = jsonUrls.join(",\n");
 });
 
 // Save on button click
 document.getElementById("save").addEventListener("click", () => {
-  const url = document.getElementById("jsonUrl").value;
-  chrome.storage.local.set({ jsonUrl: url }, () => {
-    alert("URL saved!");
+  const urls = document.getElementById("jsonUrls").value;
+  urlArray = urls.split(/[\n\r,]+/);
+  chrome.storage.local.set({ jsonUrls: urlArray }, () => {
+    alert("URLs saved!");
   });
 });

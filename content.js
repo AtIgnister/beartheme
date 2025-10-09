@@ -1,19 +1,16 @@
-console.log("✅ content.js loaded");
-
-chrome.storage.local.get("jsonUrl", ({ jsonUrl }) => {
-  if (!jsonUrl) {
+chrome.storage.local.get("jsonUrls", ({ jsonUrls }) => {
+  if (!jsonUrls) {
     console.warn("No jsonUrl found in storage");
     return;
   }
 
-  chrome.runtime.sendMessage({ type: "FETCH_JSON", url: jsonUrl }, (response) => {
+  chrome.runtime.sendMessage({ type: "FETCH_JSON", urls: jsonUrls }, (response) => {
     if (chrome.runtime.lastError) {
       console.error("Message failed:", chrome.runtime.lastError.message);
       return;
     }
 
     if (response.ok) {
-      console.log("Message received from background:", response.data);
       init(response.data)
     } else {
       console.error("Error from background:", response.error);
@@ -62,7 +59,6 @@ function applyCSS(url) {
         }
 
         if (response.ok) {
-            console.log("Message received from background:", response.data);
             const customStyles = document.querySelector("#id_custom_styles");
             customStyles.textContent = response.data;
         } else {
