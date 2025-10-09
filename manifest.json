@@ -5,8 +5,7 @@
   "description": "Adds a theme repo to bearblog.",
   "permissions": [
     "storage",
-    "scripting",
-    "activeTab"
+    "scripting"
   ],
   "host_permissions": [
     "<all_urls>"
