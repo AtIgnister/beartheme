@@ -20,7 +20,15 @@ chrome.storage.local.get("jsonUrls", ({ jsonUrls }) => {
 
 function init(data) {
     const targetElem = document.querySelector('main');
-    let htmlString = '<h1>Custom Themes</h1> <div style="display: grid;grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;grid-gap: 27px;overflow-x: scroll;padding-bottom: 20px;">';
+    let htmlString = `
+    <style>
+      .beartheme-sourcelink {
+        font-size:small;
+        color: blue;
+      }
+    </style>
+    <h1>Custom Themes</h1> 
+    <div style="display: grid;grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;grid-gap: 27px;overflow-x: scroll;padding-bottom: 20px;">`;
 
     data.forEach((theme, index) => {
         htmlString += `
@@ -28,6 +36,8 @@ function init(data) {
             <img src="${theme.thumbnail}" height="100">
             <br>
             <b style="color: #444">${theme.name}</b>
+            <br>
+            <a class="beartheme-sourcelink" href="${theme.source_link ?? theme.style_url}">Source</a>
             <br>
             <span>
                 <button type="button" class="theme-button" data-url="${theme.style_url}">Apply</button>
