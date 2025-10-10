@@ -20,9 +20,11 @@ chrome.storage.local.get("jsonUrls", ({ jsonUrls }) => {
 
 function init(data) {
     const targetElem = document.querySelector('main');
+    let weblink = "";
+
     let htmlString = `
     <style>
-      .beartheme-sourcelink {
+      .beartheme-sourcelink .beartheme-weblink {
         font-size:small;
         color: blue;
       }
@@ -31,13 +33,18 @@ function init(data) {
     <div style="display: grid;grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;grid-gap: 27px;overflow-x: scroll;padding-bottom: 20px;">`;
 
     data.forEach((theme, index) => {
+        if(theme.website) {
+          weblink = `<br><a href="${theme.website}">Website</a>`;
+        }
         htmlString += `
             <div style="width:100%; background-color: #eceff4; padding: 3px; text-align: center;">
             <img src="${theme.thumbnail}" height="100">
             <br>
             <b style="color: #444">${theme.name}</b>
+            <b style="color: #444">Made by ${theme.author} </b>
+            ${weblink}
             <br>
-            <a class="beartheme-sourcelink" href="${theme.source_link ?? theme.style_url}">Source</a>
+            <a class="beartheme-sourcelink" href="${theme.style_url}">Source</a>
             <br>
             <span>
                 <button type="button" class="theme-button" data-url="${theme.style_url}">Apply</button>
