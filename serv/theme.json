@@ -2,7 +2,7 @@
     {
         "name": "example-theme",
         "author": "kami",
-        "website": "kami.bearblog.dev",
+        "website": "https://kami.bearblog.dev",
         "style_url": "https://raw.githubusercontent.com/AtIgnister/beartheme/refs/heads/main/serv/example.css",
         "thumbnail": "https://raw.githubusercontent.com/AtIgnister/beartheme/refs/heads/main/serv/thumb.png"
     }
