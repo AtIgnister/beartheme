@@ -4,8 +4,7 @@
   "version": "0.8",
   "description": "Adds a theme repo to bearblog.",
   "permissions": [
-    "storage",
-    "scripting"
+    "storage"
   ],
   "host_permissions": [
     "<all_urls>"
