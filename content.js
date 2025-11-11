@@ -19,7 +19,3 @@ chrome.storage.local.get("jsonUrls", ({ jsonUrls }) => {
     }
   });
 });
-
-function applyAddon(type, addon) {
-  console.log("applying thing");
-}

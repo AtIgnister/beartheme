@@ -19,6 +19,9 @@ BEARTHEME_META_ADDON_END;
 export function parseAddonCssBlock(css) {
   // I know, I know, use a regex to solve a problem, now you have two problems
   // shuddup, im too lazy to write a real parser
-  const regex =/^BEARTHEME_META_ADDON_START;((.|\n)*)^BEARTHEME_META_ADDON_END/;
+  console.log(css);
+  console.log("test");
+  const regex = /BEARTHEME_META_ADDON_START;([\s\S]*?)BEARTHEME_META_ADDON_END;/g;
   let result = regex.exec(css)
+  console.log(result)
 }

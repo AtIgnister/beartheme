@@ -1,4 +1,6 @@
 import { applyAddonCSS } from "../../build/addonManager";
+import { getCSS } from "../view";
+import { parseAddonCssBlock } from "../../build/addonManager";
 
 export default function getComponent() {
     return `
@@ -54,6 +56,7 @@ export default function getComponent() {
 }
 
 export function showAddons(addons, themeIndex) {
+  console.log(parseAddonCssBlock(getCSS()))
   // Get the modal
   const modal = document.getElementById("myModal");
   const modalContent = document.getElementById("modal-content");

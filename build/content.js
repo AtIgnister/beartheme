@@ -13,6 +13,13 @@ BEARTHEME_META_ADDON_END;
 `;
   customStyles.innerHTML += addonCSS;
 }
+function parseAddonCssBlock(css) {
+  console.log(css);
+  console.log("test");
+  const regex = /BEARTHEME_META_ADDON_START;([\s\S]*?)BEARTHEME_META_ADDON_END;/g;
+  let result = regex.exec(css);
+  console.log(result);
+}
 
 // classes/components/modal.js
 function getComponent() {
@@ -68,6 +75,7 @@ function getComponent() {
     `;
 }
 function showAddons(addons, themeIndex) {
+  console.log(parseAddonCssBlock(getCSS()));
   const modal = document.getElementById("myModal");
   const modalContent = document.getElementById("modal-content");
   var span = document.getElementsByClassName("close")[0];
@@ -181,6 +189,10 @@ function applyCSS(url) {
       console.error("Error from background:", response.error);
     }
   });
+}
+function getCSS() {
+  const customStyles = document.querySelector("#id_custom_styles");
+  return customStyles.textContent;
 }
 
 // content.js

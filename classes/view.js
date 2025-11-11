@@ -71,7 +71,7 @@ export function init(data) {
         });
     };
 
-function applyCSS(url) {
+export function applyCSS(url) {
     chrome.runtime.sendMessage({ type: "FETCH_TEXT", url: url }, (response) => {
         if (chrome.runtime.lastError) {
             console.error("Message failed:", chrome.runtime.lastError.message);
@@ -85,4 +85,8 @@ function applyCSS(url) {
             console.error("Error from background:", response.error);
         }
   });
+}
+export function getCSS() {
+  const customStyles = document.querySelector("#id_custom_styles");
+  return customStyles.textContent;
 }
