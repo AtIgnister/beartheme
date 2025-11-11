@@ -1,29 +1,26 @@
+// content.js
 chrome.storage.local.get("jsonUrls", ({ jsonUrls }) => {
   if (!jsonUrls) {
     console.warn("No jsonUrl found in storage");
     return;
   }
-
   chrome.runtime.sendMessage({ type: "FETCH_JSON", urls: jsonUrls }, (response) => {
     if (chrome.runtime.lastError) {
       console.error("Message failed:", chrome.runtime.lastError.message);
       return;
     }
-
     if (response.ok) {
-      init(response.data)
+      init(response.data);
     } else {
       console.error("Error from background:", response.error);
     }
   });
 });
-
 function init(data) {
-    const targetElem = document.querySelector('main');
-    let weblink = "";
-    let addonbtn = "";
-
-    let htmlString = `
+  const targetElem = document.querySelector("main");
+  let weblink = "";
+  let addonbtn = "";
+  let htmlString = `
     <style>
       .beartheme-sourcelink .beartheme-weblink {
         font-size:small;
@@ -71,16 +68,15 @@ function init(data) {
     </style>
     <h1>Custom Themes</h1> 
     <div style="display: grid;grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;grid-gap: 27px;overflow-x: scroll;padding-bottom: 20px;">`;
-
-    data.forEach((theme, index) => {
-      console.log(theme)
-        if(theme.website) {
-          weblink = `<br><a href="${theme.website}">Website</a>`;
-        }
-        if(theme.addons) {
-          addonbtn = `<br><button data-index=${index} class="configure-addon">Configure Addons</button>`;
-        }
-        htmlString += `
+  data.forEach((theme, index) => {
+    console.log(theme);
+    if (theme.website) {
+      weblink = `<br><a href="${theme.website}">Website</a>`;
+    }
+    if (theme.addons) {
+      addonbtn = `<br><button data-index=${index} class="configure-addon">Configure Addons</button>`;
+    }
+    htmlString += `
             <div style="width:100%; background-color: #eceff4; padding: 3px; text-align: center;">
             <img src="${theme.thumbnail}" height="100">
             <br>
@@ -106,96 +102,68 @@ function init(data) {
 
             </div>
         `;
+  });
+  htmlString += "</div>";
+  targetElem.insertAdjacentHTML("afterbegin", htmlString);
+  document.querySelectorAll(".theme-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const url = button.getAttribute("data-url");
+      applyCSS(url);
     });
-
-
-    htmlString += "</div>"
-
-    // Insert after the target element
-    targetElem.insertAdjacentHTML('afterbegin', htmlString);
-
-    // Add event listeners to all buttons
-    document.querySelectorAll('.theme-button').forEach(button => {
-    button.addEventListener('click', () => {
-        const url = button.getAttribute('data-url');
-        applyCSS(url);
+  });
+  document.querySelectorAll(".configure-addon").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const themeIndex = event.target.getAttribute("data-index");
+      const theme = data[themeIndex];
+      const addons = theme.addons;
+      showAddons(addons, themeIndex);
     });
-    });
-
-    document.querySelectorAll('.configure-addon').forEach(button => {
-    button.addEventListener('click', (event) => {
-        const themeIndex = event.target.getAttribute("data-index");
-        const theme = data[themeIndex];
-        const addons = theme.addons;
-        showAddons(addons, themeIndex)
-    });
-    });
-
-    document.querySelectorAll
+  });
+  document.querySelectorAll;
 }
-
 function applyCSS(url) {
-    chrome.runtime.sendMessage({ type: "FETCH_TEXT", url: url }, (response) => {
-        if (chrome.runtime.lastError) {
-            console.error("Message failed:", chrome.runtime.lastError.message);
-            return;
-        }
-
-        if (response.ok) {
-            const customStyles = document.querySelector("#id_custom_styles");
-            customStyles.textContent = response.data;
-        } else {
-            console.error("Error from background:", response.error);
-        }
+  chrome.runtime.sendMessage({ type: "FETCH_TEXT", url }, (response) => {
+    if (chrome.runtime.lastError) {
+      console.error("Message failed:", chrome.runtime.lastError.message);
+      return;
+    }
+    if (response.ok) {
+      const customStyles = document.querySelector("#id_custom_styles");
+      customStyles.textContent = response.data;
+    } else {
+      console.error("Error from background:", response.error);
+    }
   });
 }
-
 function showAddons(addons, themeIndex) {
-  // Get the modal
   const modal = document.getElementById("myModal");
   const modalContent = document.getElementById("modal-content");
-
-  // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
-
   modal.style.display = "block";
-
-  // When the user clicks on <span> (x), close the modal
   span.onclick = function() {
     modal.style.display = "none";
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
+  };
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
-  }
-
-
+  };
   modalContent.innerHTML = "";
-  addons.forEach(addon => {
+  addons.forEach((addon) => {
     modalContent.innerHTML += `
       <span class="close">&times;</span>
       <h3>${addon.name}</h3>
       <p>${addon.description}</p>
       <button id="${addon.id}" data-theme-index="${themeIndex}">Apply</button>
-    `
-
+    `;
     const applyBtn = document.getElementById(addon.id);
-
     applyBtn.addEventListener("click", (event) => {
-      if(addon.type == "css") {
+      if (addon.type == "css") {
         applyAddonCSS(addon);
       }
-    })
+    });
   });
 }
-
-function applyAddon(type, addon) {
-  console.log("applying thing");
-}
-
 function applyAddonCSS(addon) {
   const customStyles = document.querySelector("#id_custom_styles");
   let addonCSS = `
@@ -208,9 +176,6 @@ BEARTHEME_META_ADDON_VALUE: ID=${addon.id};
 BEARTHEME_META_ADDON_END;
 */
 
-  `
-
-
-
-customStyles.innerHTML += addonCSS
+  `;
+  customStyles.innerHTML += addonCSS;
 }
