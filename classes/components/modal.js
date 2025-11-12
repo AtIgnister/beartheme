@@ -1,6 +1,6 @@
-import { applyAddonCSS } from "../../build/addonManager";
+import { applyAddonCSS } from "../addonManager";
 import { getCSS } from "../view";
-import { parseAddonCssBlock } from "../../build/addonManager";
+import { parseAddonCssBlock } from "../addonManager";
 
 export function getComponent() {
     return `
