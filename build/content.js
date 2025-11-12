@@ -105,24 +105,13 @@ function showAddons(addons, themeIndex) {
   });
 }
 
-// classes/view.js
-function init(data) {
-  const targetElem = document.querySelector("main");
+// classes/components/themeslider.js
+function getComponent2(themes) {
   let weblink = "";
   let addonbtn = "";
-  let htmlString = `
-        ${getComponent()}
-
-        <style>
-        .beartheme-sourcelink .beartheme-weblink {
-            font-size:small;
-            color: blue;
-        }
-        </style>
-        <h1>Custom Themes</h1> 
+  let htmlString = `<h1>Custom Themes</h1> 
         <div style="display: grid;grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;grid-gap: 27px;overflow-x: scroll;padding-bottom: 20px;">`;
-  data.forEach((theme, index) => {
-    console.log(theme);
+  themes.forEach((theme, index) => {
     if (theme.website) {
       weblink = `<br><a href="${theme.website}">Website</a>`;
     }
@@ -144,19 +133,27 @@ function init(data) {
                     <button type="button" class="theme-button" data-url="${theme.style_url}">Apply</button>
                 </span>
                 </div>
-
-                <!-- The Modal -->
-                <div id="myModal" class="modal">
-
-                <!-- Modal content -->
-                <div id="modal-content">
-                    <span class="close">&times;</span>
-                </div>
-
-                </div>
             `;
   });
   htmlString += "</div>";
+  return htmlString;
+}
+
+// classes/view.js
+function init(data) {
+  const targetElem = document.querySelector("main");
+  let htmlString = `
+        ${getComponent()}
+
+        <style>
+        .beartheme-sourcelink .beartheme-weblink {
+            font-size:small;
+            color: blue;
+        }
+        </style>
+        
+        ${getComponent2(data)}
+        `;
   targetElem.insertAdjacentHTML("afterbegin", htmlString);
   document.querySelectorAll(".theme-button").forEach((button) => {
     button.addEventListener("click", () => {

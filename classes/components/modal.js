@@ -2,7 +2,7 @@ import { applyAddonCSS } from "../../build/addonManager";
 import { getCSS } from "../view";
 import { parseAddonCssBlock } from "../../build/addonManager";
 
-export default function getComponent() {
+export function getComponent() {
     return `
         <style>
         /* The Modal (background) */
